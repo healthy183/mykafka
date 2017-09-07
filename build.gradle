@@ -1,0 +1,44 @@
+//子项目通用配置
+subprojects {
+    group 'com.kang.kafa'
+    version '1.0-SNAPSHOT'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    sourceCompatibility = 1.8
+    repositories {
+        mavenCentral()
+        //maven{ url 'http://maven.oschina.net/content/groups/public/'}
+    }
+    ext {
+        springVersion = '4.2.3.RELEASE'
+        lombokVersion = '1.16.6'
+        logbackClassicVersion = '1.0.13'
+        slf4jVersion = '1.7.5'
+        curatorVersion='3.1.0'
+        kafkaVersion='0.10.1.1'
+        guavaVersion='19.0'
+    }
+
+    dependencies {
+        testCompile "junit:junit:4.11"
+        compile "org.projectlombok:lombok:$lombokVersion"
+        compile "ch.qos.logback:logback-classic:$logbackClassicVersion"
+        compile "org.slf4j:slf4j-api:$slf4jVersion"
+        compile "org.slf4j:log4j-over-slf4j:$slf4jVersion"
+        compile "org.apache.kafka:kafka_2.10:$kafkaVersion"
+        compile "com.google.guava:guava:$guavaVersion"
+
+    }
+
+
+    configurations {
+        // 所有需要忽略的包定义在此
+        all*.exclude group: 'log4j', module: 'log4j'
+        all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+
+    //指定编译编码
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+}
